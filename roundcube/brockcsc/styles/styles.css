@@ -48,12 +48,12 @@ html.dark-mode body.task-login #layout-content {
 }
 
 body.task-login #logo {
-  top: 8vh;
-  max-height: 128px;
-  max-width: 128px;
+  top: 6vh;
+  max-height: 104px;
+  max-width: 104px;
   height: auto;
-  margin-bottom: 1.5rem;
-  border-radius: 22px;
+  margin-bottom: 0.5rem;
+  border-radius: 18px;
 }
 
 body.task-login #login-form {
@@ -65,11 +65,17 @@ body.task-login #login-form {
   max-width: 23rem;
 }
 
+/* Elastic renders these labels as icon slabs beside each field. */
+body.task-login #login-form label {
+  display: none;
+}
+
 body.task-login #login-form .form-control {
   border: 2px solid var(--bcsc-ink);
   border-radius: 10px;
   background: #fff;
   color: var(--bcsc-ink);
+  width: 100%;
   height: auto;
   padding: 0.55rem 0.75rem;
 }
