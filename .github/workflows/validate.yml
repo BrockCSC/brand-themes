@@ -1,7 +1,6 @@
 name: Validate
 
-# Runs on fork pull requests, so it must never reference a secret and never use
-# pull_request_target. A fork PR gets a read-only token and no credentials.
+# Runs on fork PRs: never reference a secret, never use pull_request_target.
 on:
   pull_request:
   push:

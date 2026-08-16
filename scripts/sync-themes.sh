@@ -1,9 +1,7 @@
 #!/bin/sh
-# Forced-command entrypoint for the theme deploy key. Installed on the VPS at
-# /opt/wayfarer/bin/sync-themes.sh; the key can run this and nothing else, so
-# SSH_ORIGINAL_COMMAND is deliberately ignored.
-#
-# Reads a tar.gz on stdin and installs only the two theme directories.
+# Forced-command entrypoint for the theme deploy key, at
+# /opt/wayfarer/bin/sync-themes.sh. Reads a tar.gz on stdin;
+# SSH_ORIGINAL_COMMAND is ignored by design.
 set -eu
 
 KEYCLOAK_THEMES=/opt/wayfarer/keycloak/themes
@@ -12,7 +10,7 @@ ROUNDCUBE_SKINS=/opt/wayfarer/mail/skins
 staging=$(mktemp -d /tmp/themes.XXXXXX)
 trap 'rm -rf "$staging"' EXIT
 
-# No -p, and absolute or ../ members are refused rather than trusted.
+# No -p; absolute and ../ members are refused below.
 tar xzf - -C "$staging" --no-same-owner --no-same-permissions
 
 if tar_bad=$(find "$staging" -name '..' -o -name '.*..*' -print -quit) && [ -n "$tar_bad" ]; then
@@ -40,7 +38,7 @@ rm -rf "$KEYCLOAK_THEMES/brockcsc" "$ROUNDCUBE_SKINS/brockcsc"
 mv "$KEYCLOAK_THEMES/brockcsc.new" "$KEYCLOAK_THEMES/brockcsc"
 mv "$ROUNDCUBE_SKINS/brockcsc.new" "$ROUNDCUBE_SKINS/brockcsc"
 
-# Keycloak caches themes in production mode, so the container has to restart.
+# Keycloak caches themes in production mode.
 docker restart keycloak >/dev/null
 docker restart brockcsc-roundcube >/dev/null 2>&1 || true
 

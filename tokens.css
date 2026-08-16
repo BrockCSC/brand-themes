@@ -1,5 +1,4 @@
-/* Single source of truth for both themes. Mirrors app/globals.css and the
- * component treatment in BrockCSC/website; change it here, not per theme. */
+/* Mirrors app/globals.css in BrockCSC/website. */
 :root {
   --bcsc-primary: #9a4440;
   --bcsc-primary-ink: #ffffff;

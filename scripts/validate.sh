@@ -21,8 +21,7 @@ done
 grep -q '^parent=keycloak.v2$' keycloak/brockcsc/login/theme.properties \
   || fail "theme.properties must declare parent=keycloak.v2"
 
-# styles replaces rather than appends, so dropping the parent sheet silently
-# ships an unstyled login page.
+# Dropping the parent sheet ships an unstyled login page.
 grep -q 'css/styles.css' keycloak/brockcsc/login/theme.properties \
   || fail "theme.properties styles= must still include the parent css/styles.css"
 
@@ -32,7 +31,7 @@ grep -q '"extends"[[:space:]]*:[[:space:]]*"elastic"' roundcube/brockcsc/meta.js
 grep -q 'elastic/styles/styles.css' roundcube/brockcsc/styles/styles.css \
   || fail "roundcube styles.css must import the elastic stylesheet"
 
-# woff2 magic, so a corrupt or LFS-pointer font is caught before deploy.
+# woff2 magic, catching a corrupt or LFS-pointer font.
 head -c 4 keycloak/brockcsc/login/resources/font/geist-variable.woff2 \
   | grep -q 'wOF2' || fail "geist-variable.woff2 is not a valid woff2"
 

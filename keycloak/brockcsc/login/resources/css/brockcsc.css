@@ -1,6 +1,4 @@
-/* Overrides keycloak.v2 (PatternFly v5). Selectors verified against the live
- * styles.css and rendered DOM on auth.wayfarerbx.com at Keycloak 26.0.8.
- * Re-check after a Keycloak major upgrade. */
+/* Overrides keycloak.v2 (PatternFly v5), verified at Keycloak 26.0.8. */
 
 @font-face {
   font-family: "Geist";
@@ -23,8 +21,7 @@
   --bcsc-font: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
-/* keycloak.v2 sets a fixed background image here, so the whole shorthand has
- * to be replaced rather than just the colour. */
+/* Parent sets a fixed background image, so replace the whole shorthand. */
 .login-pf body,
 body.login-pf,
 body {
@@ -33,7 +30,7 @@ body {
   color: var(--bcsc-ink);
 }
 
-/* Parent pins this to 34rem, which is wider than the site's card. */
+/* Parent pins this to 34rem. */
 .pf-v5-c-login__container {
   grid-template-columns: minmax(auto, 27rem);
   gap: 1.25rem;
@@ -43,8 +40,7 @@ body {
   padding: 2rem 1rem;
 }
 
-/* The header is the realm display name as text, coloured light-100 for a dark
- * backdrop we no longer have. Swap it for the wordmark. */
+/* Realm name renders as light-100 text; swap it for the wordmark. */
 #kc-header-wrapper {
   background-image: url("../img/logo.svg");
   background-repeat: no-repeat;

@@ -1,5 +1,4 @@
-/* Extends elastic. A derived skin's styles.css replaces the parent's rather
- * than adding to it, so elastic is imported first and overridden below. */
+/* styles.css replaces the parent's, so elastic is imported first. */
 @import url("../../elastic/styles/styles.css");
 
 @font-face {
