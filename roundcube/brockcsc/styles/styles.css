@@ -14,6 +14,16 @@
   --bcsc-tint: #fff1f0;
   --bcsc-ink: #000;
   --bcsc-font: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --color-main: var(--bcsc-primary);
+  --color-link: var(--bcsc-primary);
+  --color-link-hover: var(--bcsc-primary-dark);
+  --color-btn-primary-background: var(--bcsc-primary);
+  --color-btn-primary-background-hover: var(--bcsc-primary-dark);
+  --color-taskmenu-background: var(--bcsc-primary);
+  --color-layout-header-background: var(--bcsc-primary);
+  --color-list-selected-background: var(--bcsc-tint);
+  --color-message-information-background: var(--bcsc-tint);
 }
 
 body,
@@ -25,7 +35,7 @@ button,
   font-family: var(--bcsc-font);
 }
 
-/* Elastic's login screen is dark by default; the site is not. */
+/* Elastic's login screen is near-black; the rest of the brand is not. */
 body.task-login {
   background: var(--bcsc-tint);
 }
@@ -35,10 +45,9 @@ body.task-login #layout-content {
 }
 
 body.task-login #logo {
-  content: url("logo.svg");
-  max-width: 190px;
+  max-width: 132px;
   height: auto;
-  margin: 0 auto 1.75rem;
+  margin: 0 auto 1.5rem;
 }
 
 body.task-login #login-form {
@@ -47,7 +56,7 @@ body.task-login #login-form {
   border-radius: 20px;
   box-shadow: 6px 6px 0 0 var(--bcsc-ink);
   padding: 1.75rem;
-  max-width: 24rem;
+  max-width: 23rem;
 }
 
 body.task-login #login-form .form-control {
@@ -112,8 +121,15 @@ body.task-login #login-footer {
 
 #layout > .sidebar > .header,
 #layout > .list > .header,
-#layout > .content > .header {
+#layout > .content > .header,
+#taskmenu {
   background-color: var(--bcsc-primary);
+  color: #fff;
+}
+
+#taskmenu a.selected,
+#taskmenu a:hover {
+  background-color: var(--bcsc-primary-dark);
   color: #fff;
 }
 
