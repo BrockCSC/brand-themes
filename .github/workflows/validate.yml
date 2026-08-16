@@ -1,0 +1,18 @@
+name: Validate
+
+# Runs on fork pull requests, so it must never reference a secret and never use
+# pull_request_target. A fork PR gets a read-only token and no credentials.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: ./scripts/validate.sh

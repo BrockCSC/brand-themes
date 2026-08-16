@@ -1,0 +1,88 @@
+/* Extends elastic. A derived skin's styles.css replaces the parent's rather
+ * than adding to it, so elastic is imported first and overridden below. */
+@import url("../../elastic/styles/styles.css");
+
+@font-face {
+  font-family: "Geist";
+  src: url("geist-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --bcsc-primary: #9a4440;
+  --bcsc-primary-dark: #863a37;
+  --bcsc-tint: #fff1f0;
+  --bcsc-ink: #000;
+  --bcsc-font: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --color-main: var(--bcsc-primary);
+  --color-main-dark: var(--bcsc-primary-dark);
+  --color-link: var(--bcsc-primary);
+  --color-link-hover: var(--bcsc-primary-dark);
+  --color-btn-primary-background: var(--bcsc-primary);
+  --color-btn-primary-background-hover: var(--bcsc-primary-dark);
+  --color-layout-header-background: var(--bcsc-primary);
+  --color-taskmenu-background: var(--bcsc-primary);
+  --color-taskmenu-button-selected: #fff;
+  --color-taskmenu-button-action-background: var(--bcsc-primary-dark);
+  --color-list-selected-background: var(--bcsc-tint);
+  --color-message-information-background: var(--bcsc-tint);
+}
+
+body,
+input,
+select,
+textarea,
+button {
+  font-family: var(--bcsc-font);
+}
+
+#layout > .sidebar > .header,
+#layout > .list > .header,
+#layout > .content > .header {
+  background-color: var(--bcsc-primary);
+  color: #fff;
+}
+
+.button.primary,
+button.primary,
+input.button.mainaction,
+button.mainaction {
+  background-color: var(--bcsc-primary);
+  border: 2px solid var(--bcsc-ink);
+  border-radius: 10px;
+  box-shadow: 3px 3px 0 0 var(--bcsc-ink);
+  font-weight: 700;
+  color: #fff;
+  transition:
+    transform 80ms ease,
+    box-shadow 80ms ease;
+}
+
+.button.primary:hover,
+button.primary:hover,
+button.mainaction:hover {
+  background-color: var(--bcsc-primary-dark);
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 0 var(--bcsc-ink);
+}
+
+.button.primary:active,
+button.primary:active,
+button.mainaction:active {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
+#message-list tr.selected > td,
+.listing li.selected,
+.listing tr.selected > td {
+  background-color: var(--bcsc-tint);
+  color: var(--bcsc-ink);
+}
+
+#layout > .sidebar,
+#layout > .list {
+  border-right: 2px solid var(--bcsc-ink);
+}

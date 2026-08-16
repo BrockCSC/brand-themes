@@ -1,0 +1,50 @@
+name: Deploy Themes
+
+# push-to-main only. A fork pull request cannot trigger this, so contributor PRs
+# never reach the deploy key. Do not add pull_request or pull_request_target.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "keycloak/**"
+      - "roundcube/**"
+      - "tokens.css"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-themes
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v5
+
+      - run: ./scripts/validate.sh
+
+      - name: Ship to the VPS
+        env:
+          DEPLOY_KEY: ${{ secrets.THEME_DEPLOY_KEY }}
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+          KNOWN_HOSTS: ${{ vars.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/theme_deploy
+          chmod 600 ~/.ssh/theme_deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+          # The key is pinned to a forced command on the host, so the payload is
+          # the tarball on stdin; any command string here would be ignored.
+          tar czf - keycloak roundcube tokens.css \
+            | ssh -i ~/.ssh/theme_deploy \
+                  -o IdentitiesOnly=yes \
+                  -o StrictHostKeyChecking=yes \
+                  "$DEPLOY_USER@$DEPLOY_HOST" sync-themes

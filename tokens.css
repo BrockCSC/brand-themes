@@ -1,0 +1,19 @@
+/* Single source of truth for both themes. Mirrors app/globals.css and the
+ * component treatment in BrockCSC/website; change it here, not per theme. */
+:root {
+  --bcsc-primary: #9a4440;
+  --bcsc-primary-ink: #ffffff;
+  --bcsc-tint: #fff1f0;
+  --bcsc-ink: #000000;
+  --bcsc-paper: #ffffff;
+  --bcsc-muted: #737373;
+
+  --bcsc-border: 2px solid #000000;
+  --bcsc-shadow: 6px 6px 0 0 #000000;
+  --bcsc-shadow-sm: 3px 3px 0 0 #000000;
+  --bcsc-radius-card: 20px;
+  --bcsc-radius-control: 10px;
+
+  --bcsc-font: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+}

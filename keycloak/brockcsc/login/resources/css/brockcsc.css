@@ -1,0 +1,167 @@
+/* Overrides keycloak.v2 (PatternFly v5). Selectors verified against the live
+ * styles.css and rendered DOM on auth.wayfarerbx.com at Keycloak 26.0.8.
+ * Re-check after a Keycloak major upgrade. */
+
+@font-face {
+  font-family: "Geist";
+  src: url("../font/geist-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --bcsc-primary: #9a4440;
+  --bcsc-primary-dark: #863a37;
+  --bcsc-tint: #fff1f0;
+  --bcsc-ink: #000;
+  --bcsc-paper: #fff;
+  --bcsc-muted: #737373;
+  --bcsc-shadow: 6px 6px 0 0 #000;
+  --bcsc-shadow-sm: 3px 3px 0 0 #000;
+  --bcsc-radius-card: 20px;
+  --bcsc-radius-control: 10px;
+  --bcsc-font: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+/* keycloak.v2 sets a fixed background image here, so the whole shorthand has
+ * to be replaced rather than just the colour. */
+.login-pf body,
+body.login-pf,
+body {
+  background: var(--bcsc-tint);
+  font-family: var(--bcsc-font);
+  color: var(--bcsc-ink);
+}
+
+/* Parent pins this to 34rem, which is wider than the site's card. */
+.pf-v5-c-login__container {
+  grid-template-columns: minmax(auto, 27rem);
+  gap: 1.25rem;
+}
+
+.pf-v5-c-login {
+  padding: 2rem 1rem;
+}
+
+/* The header is the realm display name as text, coloured light-100 for a dark
+ * backdrop we no longer have. Swap it for the wordmark. */
+#kc-header-wrapper {
+  background-image: url("../img/logo.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  height: 76px;
+  font-size: 0 !important;
+  letter-spacing: normal;
+  color: transparent !important;
+}
+
+.pf-v5-c-login__main {
+  background: var(--bcsc-paper);
+  border: 2px solid var(--bcsc-ink);
+  border-radius: var(--bcsc-radius-card);
+  box-shadow: var(--bcsc-shadow);
+  overflow: hidden;
+}
+
+.pf-v5-c-login__main-header,
+.pf-v5-c-login__main-body,
+.pf-v5-c-login__main-footer {
+  padding-inline: 2rem;
+}
+
+.pf-v5-c-login__main-header {
+  padding-top: 1.75rem;
+}
+
+.pf-v5-c-login__main-footer {
+  padding-bottom: 1.75rem;
+}
+
+#kc-page-title,
+.pf-v5-c-title.pf-m-3xl {
+  font-family: var(--bcsc-font);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--bcsc-primary);
+  letter-spacing: -0.01em;
+}
+
+.pf-v5-c-form__label-text {
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--bcsc-ink);
+}
+
+.pf-v5-c-form-control,
+input.pf-v5-c-form-control {
+  border: 2px solid var(--bcsc-ink);
+  border-radius: var(--bcsc-radius-control);
+  background: var(--bcsc-paper);
+  font-family: var(--bcsc-font);
+  --pf-v5-c-form-control--BorderBottomColor: var(--bcsc-ink);
+  --pf-v5-c-form-control--BorderRadius: var(--bcsc-radius-control);
+}
+
+.pf-v5-c-form-control:focus-within,
+input.pf-v5-c-form-control:focus {
+  outline: none;
+  border-color: var(--bcsc-primary);
+  box-shadow: var(--bcsc-shadow-sm);
+}
+
+.pf-v5-c-button {
+  font-family: var(--bcsc-font);
+  font-weight: 700;
+  border-radius: var(--bcsc-radius-control);
+}
+
+.pf-v5-c-button.pf-m-primary {
+  background: var(--bcsc-primary);
+  color: #fff;
+  border: 2px solid var(--bcsc-ink);
+  box-shadow: var(--bcsc-shadow-sm);
+  transition:
+    transform 80ms ease,
+    box-shadow 80ms ease;
+}
+
+.pf-v5-c-button.pf-m-primary:hover,
+.pf-v5-c-button.pf-m-primary:focus {
+  background: var(--bcsc-primary-dark);
+  color: #fff;
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 0 var(--bcsc-ink);
+}
+
+.pf-v5-c-button.pf-m-primary:active {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
+.pf-v5-c-button.pf-m-link {
+  color: var(--bcsc-primary);
+  font-weight: 700;
+}
+
+.pf-v5-c-check__label,
+.pf-v5-c-login__main-footer-band,
+.pf-v5-c-login__main-footer-band-item {
+  color: var(--bcsc-muted);
+}
+
+.pf-v5-c-alert {
+  border: 2px solid var(--bcsc-ink);
+  border-radius: var(--bcsc-radius-control);
+  box-shadow: var(--bcsc-shadow-sm);
+}
+
+.pf-v5-c-alert.pf-m-danger {
+  background: var(--bcsc-tint);
+}
+
+#kc-social-providers a {
+  border: 2px solid var(--bcsc-ink);
+  border-radius: var(--bcsc-radius-control);
+  font-weight: 700;
+}
