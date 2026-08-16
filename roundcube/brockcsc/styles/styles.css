@@ -35,19 +35,25 @@ button,
   font-family: var(--bcsc-font);
 }
 
-/* Elastic's login screen is near-black; the rest of the brand is not. */
-body.task-login {
+/* html.dark-mode body outranks body.task-login, so both are named here. */
+body.task-login,
+html.dark-mode body.task-login {
   background: var(--bcsc-tint);
+  color: var(--bcsc-ink);
 }
 
-body.task-login #layout-content {
+body.task-login #layout-content,
+html.dark-mode body.task-login #layout-content {
   background: transparent;
 }
 
 body.task-login #logo {
-  max-width: 132px;
+  top: 8vh;
+  max-height: 128px;
+  max-width: 128px;
   height: auto;
-  margin: 0 auto 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 22px;
 }
 
 body.task-login #login-form {
