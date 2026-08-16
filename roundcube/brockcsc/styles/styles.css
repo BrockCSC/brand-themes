@@ -1,5 +1,5 @@
-/* styles.css replaces the parent's, so elastic is imported first. */
-@import url("../../elastic/styles/styles.css");
+/* Elastic ships styles.min.css; importing styles.css yields an unstyled page. */
+@import url("../../elastic/styles/styles.min.css");
 
 @font-face {
   font-family: "Geist";

@@ -28,8 +28,10 @@ grep -q 'css/styles.css' keycloak/brockcsc/login/theme.properties \
 grep -q '"extends"[[:space:]]*:[[:space:]]*"elastic"' roundcube/brockcsc/meta.json \
   || fail "roundcube meta.json must extend elastic"
 
-grep -q 'elastic/styles/styles.css' roundcube/brockcsc/styles/styles.css \
-  || fail "roundcube styles.css must import the elastic stylesheet"
+# Elastic ships styles.min.css only; importing styles.css 404s and the page
+# renders with no base styles at all.
+grep -q 'elastic/styles/styles.min.css' roundcube/brockcsc/styles/styles.css \
+  || fail "roundcube styles.css must import elastic's styles.min.css"
 
 # woff2 magic, catching a corrupt or LFS-pointer font.
 head -c 4 keycloak/brockcsc/login/resources/font/geist-variable.woff2 \
