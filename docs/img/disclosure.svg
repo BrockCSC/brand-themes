@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="850" height="950" viewBox="0 0 850 950" role="img" aria-labelledby="ttl desc">
+  <title id="ttl">How a security report is handled</title>
+  <desc id="desc">A vulnerability is reported privately through the GitHub Security tab, or by email to admin at brockcsc dot ca. A co-president triages it within days rather than hours. The fix lands on main, which is the only supported line, and merging installs the theme and restarts Keycloak so it is live within minutes. A GitHub advisory follows, with credit. Two panels list what is worth reporting in this repository — markup or CSS that changes what the login form submits, anything that covers or imitates a Keycloak-rendered field, anything that could carry credentials off the page, and dropping the parent theme chain — and what is not, including Keycloak and PatternFly themselves, layout bugs, realm configuration, and how the theme reaches the server.</desc>
+
+  <style><![CDATA[
+    text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    .m { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; fill: #c05a54; }
+    .title   { font-size: 25px; font-weight: 800; fill: #c05a54; letter-spacing: -0.3px; }
+    .sub     { font-size: 13px; fill: #96969f; }
+    .zone    { font-size: 10.5px; font-weight: 700; letter-spacing: 1.4px; fill: #96969f; }
+    .card    { fill: #80808f; fill-opacity: 0.07; stroke: #8a8a94; stroke-width: 1.5; }
+    .shadow  { fill: #8a8a94; fill-opacity: 0.20; }
+    .h       { font-size: 14px; font-weight: 700; fill: #82828c; }
+    .note    { font-size: 11.5px; fill: #96969f; }
+    .hot     { font-size: 11.5px; font-weight: 700; fill: #c05a54; }
+    .num     { font-size: 11px; font-weight: 800; fill: #c05a54; }
+    .chip    { fill: #c05a54; fill-opacity: 0.10; stroke: #c05a54; stroke-width: 1; stroke-opacity: 0.45; }
+    .flow    { stroke: #c05a54; stroke-width: 2.4; fill: none; stroke-dasharray: 7 9; stroke-linecap: round;
+               animation: flow 1.6s linear infinite; }
+    @keyframes flow { to { stroke-dashoffset: -32; } }
+    @media (prefers-reduced-motion: reduce) { .flow { animation: none; } }
+  ]]></style>
+
+  <text class="eyebrow" x="24" y="34">BRAND-THEMES  ·  SECURITY</text>
+  <text class="title" x="24" y="64">From a private report to a restarted Keycloak</text>
+  <text class="sub" x="24" y="88">This repository renders a login page. That is the whole reason it has a security policy.</text>
+
+  <text class="zone" x="24" y="122">HOW A REPORT TRAVELS</text>
+  <line x1="24" y1="130" x2="826" y2="130" stroke="#8a8a94" stroke-width="1" stroke-opacity="0.45"/>
+
+  <!-- 1 report -->
+  <rect class="shadow" x="29" y="149" width="797" height="84" rx="11"/>
+  <rect x="24" y="144" width="797" height="84" rx="11" fill="#c05a54" fill-opacity="0.09" stroke="#c05a54" stroke-width="1.8"/>
+  <text class="num" x="40" y="167">01</text><text class="h" x="62" y="167">Report it privately</text>
+  <text class="note" x="40" y="188">Security tab → <tspan class="hot">Report a vulnerability</tspan>. The thread stays private until there is a fix, so nothing is published early.</text>
+  <rect class="chip" x="40" y="200" width="186" height="20" rx="7"/><text class="hot m" x="50" y="214">private reporting: enabled</text>
+  <rect class="chip" x="236" y="200" width="234" height="20" rx="7"/><text class="hot m" x="246" y="214">admin@brockcsc.ca if that fails</text>
+
+  <path class="flow" d="M424 233 L424 253"/><polygon points="424,259 418,247 430,247" fill="#c05a54"/>
+
+  <!-- 2 triage -->
+  <rect class="shadow" x="29" y="272" width="797" height="84" rx="11"/>
+  <rect class="card"   x="24" y="267" width="797" height="84" rx="11"/>
+  <text class="num" x="40" y="290">02</text><text class="h" x="62" y="290">A co-president reads it</text>
+  <text class="note" x="40" y="311">Expect days rather than hours. Nobody is on call, term breaks are real, and the same few people run</text>
+  <text class="note" x="40" y="328">everything else in the club — so you get an honest answer, not a fast one.</text>
+
+  <path class="flow" d="M424 356 L424 376"/><polygon points="424,382 418,370 430,370" fill="#c05a54"/>
+
+  <!-- 3 fix -->
+  <rect class="shadow" x="29" y="395" width="797" height="84" rx="11"/>
+  <rect class="card"   x="24" y="390" width="797" height="84" rx="11"/>
+  <text class="num" x="40" y="413">03</text><text class="h" x="62" y="413">Fix on main</text>
+  <text class="note" x="40" y="434">The supported version is whatever is installed on the realm right now. There are no releases to patch and</text>
+  <text class="note" x="40" y="451">nothing to back-port, which is why this file has no version table.</text>
+
+  <path class="flow" d="M424 479 L424 499"/><polygon points="424,505 418,493 430,493" fill="#c05a54"/>
+
+  <!-- 4 install and disclose -->
+  <rect class="shadow" x="29" y="518" width="797" height="100" rx="11"/>
+  <rect class="card"   x="24" y="513" width="797" height="100" rx="11"/>
+  <text class="num" x="40" y="536">04</text><text class="h" x="62" y="536">Merging installs it, then we disclose</text>
+  <text class="note" x="40" y="557">A merge to <tspan class="m">main</tspan> runs the deploy workflow, so a reviewed fix is on the login page minutes later — including</text>
+  <text class="note" x="40" y="574">the few seconds where sign-in is unavailable while Keycloak restarts to drop its theme cache.</text>
+  <text class="note" x="40" y="591">A GitHub advisory follows, crediting you by whatever name you ask for — or by none.</text>
+
+  <text class="zone" x="24" y="658">SCOPE — WHAT THIS REPOSITORY IS</text>
+  <line x1="24" y1="666" x2="826" y2="666" stroke="#8a8a94" stroke-width="1" stroke-opacity="0.45"/>
+
+  <!-- in scope -->
+  <rect class="shadow" x="29" y="693" width="387" height="196" rx="11"/>
+  <rect x="24" y="688" width="387" height="196" rx="11" fill="#c05a54" fill-opacity="0.07" stroke="#c05a54" stroke-width="1.5"/>
+  <text class="h" x="40" y="712" style="fill:#c05a54">WORTH REPORTING HERE</text>
+  <circle cx="44" cy="732" r="2.6" fill="#c05a54"/>
+  <text class="note" x="56" y="736">Markup or CSS that changes what the login form</text>
+  <text class="note" x="56" y="752">submits, or where it submits to</text>
+  <circle cx="44" cy="772" r="2.6" fill="#c05a54"/>
+  <text class="note" x="56" y="776">Anything that covers, hides or imitates a field</text>
+  <text class="note" x="56" y="792">Keycloak rendered, or the provider button</text>
+  <circle cx="44" cy="812" r="2.6" fill="#c05a54"/>
+  <text class="note" x="56" y="816">A change that could carry a username, password</text>
+  <text class="note" x="56" y="832">or an authentication code off the page</text>
+  <circle cx="44" cy="852" r="2.6" fill="#c05a54"/>
+  <text class="note" x="56" y="856">Dropping <tspan class="m">parent=keycloak.v2</tspan>, so upstream fixes</text>
+  <text class="note" x="56" y="872">stop reaching the login page</text>
+
+  <!-- out of scope -->
+  <rect class="shadow" x="439" y="693" width="387" height="196" rx="11"/>
+  <rect class="card"   x="434" y="688" width="387" height="196" rx="11"/>
+  <text class="h" x="450" y="712">NOT IN SCOPE</text>
+  <circle cx="454" cy="732" r="2.6" fill="#8a8a94"/>
+  <text class="note" x="466" y="736">Keycloak and PatternFly themselves — those go</text>
+  <text class="note" x="466" y="752">upstream, not here</text>
+  <circle cx="454" cy="772" r="2.6" fill="#8a8a94"/>
+  <text class="note" x="466" y="776">Contrast, spacing and layout bugs — real, but</text>
+  <text class="note" x="466" y="792">ordinary issues, so please just file one</text>
+  <circle cx="454" cy="812" r="2.6" fill="#8a8a94"/>
+  <text class="note" x="466" y="816">Realm settings, clients and password policy:</text>
+  <text class="note" x="466" y="832">none of that lives in this repository</text>
+  <circle cx="454" cy="852" r="2.6" fill="#8a8a94"/>
+  <text class="note" x="466" y="856">How the theme reaches the server, which is</text>
+  <text class="note" x="466" y="872">operations rather than code in this repo</text>
+
+  <text class="note" x="24" y="914">Code scanning, Dependabot alerts and secret scanning with push protection run on this repository, and <tspan class="m">main</tspan> is protected.</text>
+  <text class="note" x="24" y="931">Fork pull requests run <tspan class="m">scripts/validate.sh</tspan> only — structure, no network, no secrets — so a PR can never reach the deploy key.</text>
+</svg>
