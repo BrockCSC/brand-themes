@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="850" height="726" viewBox="0 0 850 726" role="img" aria-labelledby="ttl desc">
+  <title id="ttl">Repository layout of brand-themes</title>
+  <desc id="desc">The repository holds two workflows, one that validates every pull request and one that deploys from main; the Keycloak theme under keycloak slash brockcsc slash login, containing theme.properties and a resources directory of css, font and img; two shell scripts, one that runs in CI and one that runs on the server; and tokens.css at the root. Only the keycloak brockcsc directory is installed onto the server.</desc>
+
+  <style><![CDATA[
+    text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    .m { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; fill: #c05a54; }
+    .title   { font-size: 25px; font-weight: 800; fill: #c05a54; letter-spacing: -0.3px; }
+    .sub     { font-size: 13px; fill: #96969f; }
+    .panel   { fill: #80808f; fill-opacity: 0.05; stroke: #8a8a94; stroke-width: 1.5; }
+    .card    { fill: #80808f; fill-opacity: 0.07; stroke: #8a8a94; stroke-width: 1.5; }
+    .shadow  { fill: #8a8a94; fill-opacity: 0.20; }
+    .lane    { font-size: 10.5px; font-weight: 700; letter-spacing: 1.3px; fill: #96969f; }
+    .h       { font-size: 13px; font-weight: 700; fill: #82828c; }
+    .dir     { font-size: 12.5px; font-weight: 700; fill: #c05a54; }
+    .file    { font-size: 12.5px; fill: #8a8a94; }
+    .note    { font-size: 11px; fill: #96969f; }
+    .tw      { stroke: #8a8a94; stroke-width: 1.1; fill: none; stroke-opacity: 0.5; }
+    .ship    { fill: #c05a54; fill-opacity: 0.09; stroke: #c05a54; stroke-width: 1.5; stroke-dasharray: 5 4; }
+  ]]></style>
+
+  <text class="eyebrow" x="24" y="34">BRAND-THEMES  ·  CONTRIBUTING</text>
+  <text class="title" x="24" y="64">Where everything lives</text>
+  <text class="sub" x="24" y="88">Four concerns, kept apart: what CI checks, what CI ships, what the server runs, and what the palette says.</text>
+
+  <rect class="panel" x="24" y="118" width="470" height="512" rx="12"/>
+  <text class="lane" x="40" y="142">REPOSITORY</text>
+
+  <!-- highlight band: the only thing installed -->
+  <rect class="ship" x="36" y="268" width="446" height="188" rx="10"/>
+  <text class="note" x="46" y="286" fill="#c05a54" font-weight="700">the only directory installed on the server</text>
+
+  <text class="dir m" x="40" y="172">brand-themes/</text>
+
+  <!-- .github -->
+  <path class="tw" d="M50 180 L50 202 L66 202"/>
+  <text class="dir m" x="72" y="207">.github/workflows/</text>
+  <path class="tw" d="M82 214 L82 234 L98 234"/>
+  <text class="file m" x="104" y="239">validate.yml</text>
+  <text class="note" x="216" y="239">pull requests · no secrets</text>
+  <path class="tw" d="M82 214 L82 260 L98 260"/>
+  <text class="file m" x="104" y="265">deploy.yml</text>
+  <text class="note" x="216" y="265">push to main only · holds the key</text>
+
+  <!-- keycloak -->
+  <path class="tw" d="M50 180 L50 302 L66 302"/>
+  <text class="dir m" x="72" y="307">keycloak/</text>
+  <path class="tw" d="M82 314 L82 330 L98 330"/>
+  <text class="dir m" x="104" y="335">brockcsc/</text>
+  <text class="note" x="216" y="335">this name is the theme name</text>
+  <path class="tw" d="M114 342 L114 358 L130 358"/>
+  <text class="dir m" x="136" y="363">login/</text>
+  <text class="note" x="216" y="363">the Keycloak theme type</text>
+  <path class="tw" d="M146 370 L146 386 L162 386"/>
+  <text class="file m" x="168" y="391">theme.properties</text>
+  <path class="tw" d="M146 370 L146 412 L162 412"/>
+  <text class="dir m" x="168" y="417">resources/</text>
+  <text class="note" x="290" y="417">served to the browser</text>
+  <path class="tw" d="M178 424 L178 440 L194 440"/>
+  <text class="file m" x="200" y="445">css/ font/ img/</text>
+
+  <!-- scripts -->
+  <path class="tw" d="M50 180 L50 486 L66 486"/>
+  <text class="dir m" x="72" y="491">scripts/</text>
+  <path class="tw" d="M82 498 L82 518 L98 518"/>
+  <text class="file m" x="104" y="523">validate.sh</text>
+  <text class="note" x="216" y="523">runs in CI, on every PR</text>
+  <path class="tw" d="M82 498 L82 544 L98 544"/>
+  <text class="file m" x="104" y="549">sync-themes.sh</text>
+  <text class="note" x="216" y="549">runs on the server, not in CI</text>
+
+  <!-- root files -->
+  <path class="tw" d="M50 180 L50 576 L66 576"/>
+  <text class="file m" x="72" y="581">tokens.css</text>
+  <text class="note" x="216" y="581">reference palette, not served</text>
+  <path class="tw" d="M50 180 L50 604 L66 604"/>
+  <text class="file m" x="72" y="609">.gitignore</text>
+
+  <!-- ══ side cards ═══════════════════════════════════════ -->
+  <rect class="shadow" x="521" y="123" width="305" height="152" rx="12"/>
+  <rect class="card"   x="516" y="118" width="305" height="152" rx="12"/>
+  <text class="h" x="532" y="142">The two directory names matter</text>
+  <text class="note" x="532" y="166">Keycloak resolves a theme as</text>
+  <text class="file m" x="532" y="185" font-size="11">&lt;theme-name&gt;/&lt;type&gt;/</text>
+  <text class="note" x="532" y="206">so renaming <tspan class="m">brockcsc/</tspan> changes the name</text>
+  <text class="note" x="532" y="223">you pick in the admin console, and</text>
+  <text class="note" x="532" y="240">renaming <tspan class="m">login/</tspan> stops it applying to the</text>
+  <text class="note" x="532" y="257">login pages at all.</text>
+
+  <rect class="shadow" x="521" y="299" width="305" height="152" rx="12"/>
+  <rect class="card"   x="516" y="294" width="305" height="152" rx="12"/>
+  <text class="h" x="532" y="318">Paths appear in three places</text>
+  <text class="note" x="532" y="342">A file under <tspan class="m">resources/</tspan> is referenced by</text>
+  <text class="note" x="532" y="359">a relative URL in the stylesheet, listed</text>
+  <text class="note" x="532" y="376">in <tspan class="m">theme.properties</tspan> if it is a stylesheet,</text>
+  <text class="note" x="532" y="393">and asserted by <tspan class="m">validate.sh</tspan>. Adding or</text>
+  <text class="note" x="532" y="410">moving one means editing all three, or</text>
+  <text class="note" x="532" y="427">CI fails on the next pull request.</text>
+
+  <rect class="shadow" x="521" y="475" width="305" height="155" rx="12"/>
+  <rect class="card"   x="516" y="470" width="305" height="155" rx="12"/>
+  <text class="h" x="532" y="494">Two scripts, two machines</text>
+  <text class="note" x="532" y="518"><tspan class="m">validate.sh</tspan> is structural only — no</text>
+  <text class="note" x="532" y="535">network, no secrets — so it is safe to</text>
+  <text class="note" x="532" y="552">run on a fork's pull request.</text>
+  <text class="note" x="532" y="576"><tspan class="m">sync-themes.sh</tspan> never runs in CI. It is</text>
+  <text class="note" x="532" y="593">the source for the forced command</text>
+  <text class="note" x="532" y="610">installed on the server by hand.</text>
+
+  <line x1="24" y1="660" x2="826" y2="660" stroke="#8a8a94" stroke-width="1" stroke-opacity="0.4"/>
+  <text class="note" x="24" y="682">The theme sets <tspan class="m">parent=keycloak.v2</tspan> and overrides, rather than forking it, so upstream security fixes arrive without merge conflicts.</text>
+  <text class="note" x="24" y="700">Selectors track PatternFly v5 as shipped in Keycloak 26.0.8 and are worth re-checking after any major Keycloak upgrade.</text>
+  <text class="note" x="24" y="718">Adding a second theme type, such as <tspan class="m">account/</tspan>, means a sibling directory here and a matching check in <tspan class="m">validate.sh</tspan>.</text>
+</svg>

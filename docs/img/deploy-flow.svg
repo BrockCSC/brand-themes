@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="850" height="1212" viewBox="0 0 850 1212" role="img" aria-labelledby="ttl desc">
+  <title id="ttl">How a theme change reaches the running Keycloak</title>
+  <desc id="desc">A push to main touching the theme runs the deploy workflow, which validates the structure, tars the theme, and pipes it over SSH to a key pinned to a forced command. On the server that command unpacks the archive into a temporary directory, refuses suspicious paths, checks the theme is present, copies it beside the live theme and swaps it in one move, then restarts Keycloak so the theme cache is dropped.</desc>
+
+  <style><![CDATA[
+    text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    .m { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; fill: #c05a54; }
+    .title   { font-size: 25px; font-weight: 800; fill: #c05a54; letter-spacing: -0.3px; }
+    .sub     { font-size: 13px; fill: #96969f; }
+    .zone    { font-size: 10.5px; font-weight: 700; letter-spacing: 1.4px; fill: #96969f; }
+    .card    { fill: #80808f; fill-opacity: 0.07; stroke: #8a8a94; stroke-width: 1.5; }
+    .shadow  { fill: #8a8a94; fill-opacity: 0.20; }
+    .h       { font-size: 14px; font-weight: 700; fill: #82828c; }
+    .note    { font-size: 11.5px; fill: #96969f; }
+    .code    { font-size: 11.5px; fill: #8a8a94; }
+    .hot     { font-size: 11.5px; font-weight: 700; fill: #c05a54; }
+    .num     { font-size: 11px; font-weight: 800; fill: #c05a54; }
+    .chip    { fill: #c05a54; fill-opacity: 0.10; stroke: #c05a54; stroke-width: 1; stroke-opacity: 0.45; }
+    .flow    { stroke: #c05a54; stroke-width: 2.4; fill: none; stroke-dasharray: 7 9; stroke-linecap: round;
+               animation: flow 1.6s linear infinite; }
+    @keyframes flow { to { stroke-dashoffset: -32; } }
+    @media (prefers-reduced-motion: reduce) { .flow { animation: none; } }
+  ]]></style>
+
+  <text class="eyebrow" x="24" y="34">BRAND-THEMES  ·  DEPLOY</text>
+  <text class="title" x="24" y="64">From a merge to a restarted Keycloak</text>
+  <text class="sub" x="24" y="88">One key, one command. The credential on the server cannot do anything except install a theme.</text>
+
+  <text class="zone" x="24" y="122">ON GITHUB — .github/workflows/deploy.yml</text>
+  <line x1="24" y1="130" x2="826" y2="130" stroke="#8a8a94" stroke-width="1" stroke-opacity="0.45"/>
+
+  <!-- 1 trigger -->
+  <rect class="shadow" x="29" y="149" width="797" height="88" rx="11"/>
+  <rect class="card"   x="24" y="144" width="797" height="88" rx="11"/>
+  <text class="num" x="40" y="167">01</text><text class="h" x="62" y="167">Trigger</text>
+  <text class="note" x="40" y="188">Push to <tspan class="m">main</tspan> touching <tspan class="m">keycloak/**</tspan>, <tspan class="m">tokens.css</tspan> or the workflow itself. Also runnable by hand.</text>
+  <rect class="chip" x="40" y="200" width="176" height="20" rx="7"/><text class="hot m" x="50" y="214">environment: production</text>
+  <rect class="chip" x="226" y="200" width="200" height="20" rx="7"/><text class="hot m" x="236" y="214">concurrency: deploy-themes</text>
+  <rect class="chip" x="436" y="200" width="176" height="20" rx="7"/><text class="hot m" x="446" y="214">permissions: contents read</text>
+  <text class="note" x="626" y="214">no <tspan class="m">pull_request</tspan> trigger</text>
+
+  <path class="flow" d="M424 237 L424 259"/><polygon points="424,265 418,253 430,253" fill="#c05a54"/>
+
+  <!-- 2 validate -->
+  <rect class="shadow" x="29" y="276" width="797" height="62" rx="11"/>
+  <rect class="card"   x="24" y="271" width="797" height="62" rx="11"/>
+  <text class="num" x="40" y="294">02</text><text class="h" x="62" y="294">Check out and validate</text>
+  <text class="note" x="40" y="315">The same <tspan class="m">scripts/validate.sh</tspan> every pull request runs: required files present, parent still declared,</text>
+  <text class="note" x="40" y="330">the parent stylesheet still listed, and the font is a real woff2 rather than an LFS pointer.</text>
+
+  <path class="flow" d="M424 338 L424 360"/><polygon points="424,366 418,354 430,354" fill="#c05a54"/>
+
+  <!-- 3 pack -->
+  <rect class="shadow" x="29" y="377" width="797" height="62" rx="11"/>
+  <rect class="card"   x="24" y="372" width="797" height="62" rx="11"/>
+  <text class="num" x="40" y="395">03</text><text class="h" x="62" y="395">Pack</text>
+  <text class="code m" x="40" y="418">tar czf - keycloak tokens.css</text>
+  <text class="note" x="290" y="418">— streamed straight into ssh, never written to a file on the runner.</text>
+
+  <path class="flow" d="M424 439 L424 461"/><polygon points="424,467 418,455 430,455" fill="#c05a54"/>
+
+  <!-- 4 ship -->
+  <rect class="shadow" x="29" y="478" width="797" height="96" rx="11"/>
+  <rect class="card"   x="24" y="473" width="797" height="96" rx="11"/>
+  <text class="num" x="40" y="496">04</text><text class="h" x="62" y="496">Ship</text>
+  <text class="code m" x="40" y="519">ssh -i ~/.ssh/theme_deploy -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes …</text>
+  <text class="note" x="40" y="540">The key, the user, the host and the pinned <tspan class="m">known_hosts</tspan> all come from repository secrets and variables.</text>
+  <text class="note" x="40" y="557">A trailing command word is written for readability, but the server discards it — see step 05.</text>
+
+  <!-- ══ boundary ═════════════════════════════════════════ -->
+  <path class="flow" d="M424 574 L424 618"/><polygon points="424,624 418,612 430,612" fill="#c05a54"/>
+  <line x1="24" y1="596" x2="380" y2="596" stroke="#8a8a94" stroke-width="1.5" stroke-opacity="0.5" stroke-dasharray="6 6"/>
+  <line x1="470" y1="596" x2="826" y2="596" stroke="#8a8a94" stroke-width="1.5" stroke-opacity="0.5" stroke-dasharray="6 6"/>
+
+  <text class="zone" x="24" y="654">ON THE SERVER — scripts/sync-themes.sh, installed as the forced command</text>
+  <line x1="24" y1="662" x2="826" y2="662" stroke="#8a8a94" stroke-width="1" stroke-opacity="0.45"/>
+
+  <!-- 5 forced command -->
+  <rect class="shadow" x="29" y="681" width="797" height="76" rx="11"/>
+  <rect x="24" y="676" width="797" height="76" rx="11" fill="#c05a54" fill-opacity="0.09" stroke="#c05a54" stroke-width="1.8"/>
+  <text class="num" x="40" y="699">05</text><text class="h" x="62" y="699">Forced command</text>
+  <text class="note" x="40" y="720">The authorized key is pinned to this one script, so whatever the client asks for is irrelevant:</text>
+  <text class="code m" x="40" y="740">SSH_ORIGINAL_COMMAND</text><text class="note" x="196" y="740">is ignored by design. A stolen key can install a theme and nothing else.</text>
+
+  <path class="flow" d="M424 757 L424 779"/><polygon points="424,785 418,773 430,773" fill="#c05a54"/>
+
+  <!-- 6 unpack -->
+  <rect class="shadow" x="29" y="796" width="797" height="104" rx="11"/>
+  <rect class="card"   x="24" y="791" width="797" height="104" rx="11"/>
+  <text class="num" x="40" y="814">06</text><text class="h" x="62" y="814">Unpack into a staging directory, then refuse anything odd</text>
+  <text class="code m" x="40" y="836">mktemp -d</text><text class="note" x="112" y="836">then</text><text class="code m" x="144" y="836">tar xzf - --no-same-owner --no-same-permissions</text>
+  <text class="note" x="40" y="856">Paths that look like traversal are rejected, and the archive must contain</text>
+  <text class="code m" x="40" y="874">keycloak/brockcsc/login/theme.properties</text><text class="note" x="316" y="874">or the run aborts before touching the live theme.</text>
+  <text class="note" x="40" y="890">The staging directory is removed on exit either way.</text>
+
+  <path class="flow" d="M424 900 L424 922"/><polygon points="424,928 418,916 430,916" fill="#c05a54"/>
+
+  <!-- 7 swap -->
+  <rect class="shadow" x="29" y="939" width="797" height="84" rx="11"/>
+  <rect class="card"   x="24" y="934" width="797" height="84" rx="11"/>
+  <text class="num" x="40" y="957">07</text><text class="h" x="62" y="957">Copy beside the live theme, then swap</text>
+  <text class="note" x="40" y="978">The new theme is copied to <tspan class="m">brockcsc.new</tspan> first and only moved into place once the copy finished, so a</text>
+  <text class="note" x="40" y="995">half-written theme is never the live one. Only <tspan class="m">keycloak/brockcsc</tspan> is installed —</text>
+  <text class="hot m" x="588" y="995">tokens.css</text><text class="note" x="662" y="995">rides along</text>
+  <text class="note" x="40" y="1012">in the tarball but is never copied out of staging.</text>
+
+  <path class="flow" d="M424 1023 L424 1045"/><polygon points="424,1051 418,1039 430,1039" fill="#c05a54"/>
+
+  <!-- 8 restart -->
+  <rect class="shadow" x="29" y="1062" width="797" height="74" rx="11"/>
+  <rect class="card"   x="24" y="1057" width="797" height="74" rx="11"/>
+  <text class="num" x="40" y="1080">08</text><text class="h" x="62" y="1080">Restart Keycloak</text>
+  <text class="note" x="40" y="1101">Production mode caches themes, so the container is restarted to pick the new one up. Expect a few</text>
+  <text class="note" x="40" y="1118">seconds where sign-in is unavailable — which is why the workflow never runs two deploys at once.</text>
+
+  <text class="note" x="24" y="1164">Paths and the container name live at the top of <tspan class="m">scripts/sync-themes.sh</tspan>. That file is the source for what runs on the server;</text>
+  <text class="note" x="24" y="1181">installing an updated copy there is a manual step, not something this workflow does.</text>
+</svg>

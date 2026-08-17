@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="850" height="840" viewBox="0 0 850 840" role="img" aria-labelledby="ttl desc">
+  <title id="ttl">The BrockCSC custom property system and how it reaches Keycloak</title>
+  <desc id="desc">Keycloak resolves the theme by inheriting keycloak.v2 and loading two stylesheets, the parent styles.css and then brockcsc.css. tokens.css at the repository root is a reference copy that Keycloak never loads, so brockcsc.css redeclares the properties itself. Ten properties are identical in both files; tokens.css additionally defines primary-ink and border, and brockcsc.css additionally defines primary-dark. A consumption map lists which selectors read each property.</desc>
+
+  <style><![CDATA[
+    text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    .m { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; fill: #c05a54; }
+    .title   { font-size: 25px; font-weight: 800; fill: #c05a54; letter-spacing: -0.3px; }
+    .sub     { font-size: 13px; fill: #96969f; }
+    .card    { fill: #80808f; fill-opacity: 0.07; stroke: #8a8a94; stroke-width: 1.5; }
+    .shadow  { fill: #8a8a94; fill-opacity: 0.20; }
+    .h       { font-size: 13.5px; font-weight: 700; fill: #82828c; }
+    .hs      { font-size: 11px; fill: #96969f; }
+    .tok     { font-size: 11px; fill: #8a8a94; }
+    .val     { font-size: 11px; fill: #96969f; }
+    .hot     { font-size: 11px; font-weight: 700; fill: #c05a54; }
+    .note    { font-size: 11.5px; fill: #96969f; }
+    .step    { font-size: 12px; fill: #8a8a94; }
+    .tie     { stroke: #8a8a94; stroke-width: 1; stroke-opacity: 0.3; stroke-dasharray: 2 4; }
+    .sw      { stroke: #8a8a94; stroke-width: 0.8; stroke-opacity: 0.6; }
+    .flow    { stroke: #c05a54; stroke-width: 2.2; fill: none; stroke-dasharray: 7 9; stroke-linecap: round;
+               animation: flow 1.8s linear infinite; }
+    @keyframes flow { to { stroke-dashoffset: -32; } }
+    @media (prefers-reduced-motion: reduce) { .flow { animation: none; } }
+  ]]></style>
+
+  <text class="eyebrow" x="24" y="34">BRAND-THEMES  ·  TOKENS</text>
+  <text class="title" x="24" y="64">One palette, declared twice on purpose</text>
+  <text class="sub" x="24" y="88">Keycloak loads its own stylesheet, so the theme cannot import the root token file. It restates it.</text>
+
+  <!-- ══ what Keycloak loads ══════════════════════════════ -->
+  <rect class="shadow" x="29" y="115" width="797" height="80" rx="12"/>
+  <rect class="card"   x="24" y="110" width="797" height="80" rx="12"/>
+  <text class="h" x="40" y="132">Resolution order, from <tspan class="m">theme.properties</tspan></text>
+
+  <rect x="40" y="146" width="150" height="30" rx="8" fill="#8a8a94" fill-opacity="0.12"/>
+  <text class="step m" x="52" y="166">parent=keycloak.v2</text>
+  <path class="flow" d="M196 161 L222 161"/><polygon points="228,161 216,155 216,167" fill="#c05a54"/>
+  <rect x="234" y="146" width="150" height="30" rx="8" fill="#8a8a94" fill-opacity="0.12"/>
+  <text class="step m" x="246" y="166">common/keycloak</text>
+  <path class="flow" d="M390 161 L416 161"/><polygon points="422,161 410,155 410,167" fill="#c05a54"/>
+  <rect x="428" y="146" width="140" height="30" rx="8" fill="#8a8a94" fill-opacity="0.12"/>
+  <text class="step m" x="440" y="166">css/styles.css</text>
+  <path class="flow" d="M574 161 L600 161"/><polygon points="606,161 594,155 594,167" fill="#c05a54"/>
+  <rect x="612" y="146" width="150" height="30" rx="8" fill="#c05a54" fill-opacity="0.14" stroke="#c05a54" stroke-width="1.4"/>
+  <text class="hot m" x="624" y="166" font-size="12">css/brockcsc.css</text>
+  <text class="note" x="776" y="166">wins</text>
+
+  <!-- ══ token cards ══════════════════════════════════════ -->
+  <rect class="shadow" x="29" y="221" width="330" height="360" rx="12"/>
+  <rect class="card"   x="24" y="216" width="330" height="360" rx="12"/>
+  <text class="h m" x="40" y="240">tokens.css</text>
+  <text class="hs" x="40" y="256">repo root · mirrors app/globals.css in the</text>
+  <text class="hs" x="40" y="270">website. Reference only — never served.</text>
+
+  <rect class="shadow" x="501" y="221" width="330" height="360" rx="12"/>
+  <rect class="card"   x="496" y="216" width="330" height="360" rx="12"/>
+  <text class="h m" x="512" y="240">brockcsc.css  :root</text>
+  <text class="hs" x="512" y="256">inside the theme · the only definitions</text>
+  <text class="hs" x="512" y="270">Keycloak ever resolves.</text>
+
+  <!-- aligned rows -->
+  <g class="tie">
+    <line x1="358" y1="296" x2="492" y2="296"/><line x1="358" y1="320" x2="492" y2="320"/>
+    <line x1="358" y1="344" x2="492" y2="344"/><line x1="358" y1="368" x2="492" y2="368"/>
+    <line x1="358" y1="392" x2="492" y2="392"/><line x1="358" y1="416" x2="492" y2="416"/>
+    <line x1="358" y1="440" x2="492" y2="440"/><line x1="358" y1="464" x2="492" y2="464"/>
+    <line x1="358" y1="488" x2="492" y2="488"/><line x1="358" y1="512" x2="492" y2="512"/>
+  </g>
+  <text class="hs" x="425" y="288" text-anchor="middle">identical in both</text>
+
+  <!-- left column tokens -->
+  <rect class="sw" x="40" y="292" width="10" height="10" fill="#9a4440"/>
+  <text class="tok m" x="56" y="301">--bcsc-primary</text>          <text class="val m" x="230" y="301">#9a4440</text>
+  <rect class="sw" x="40" y="316" width="10" height="10" fill="#fff1f0"/>
+  <text class="tok m" x="56" y="325">--bcsc-tint</text>             <text class="val m" x="230" y="325">#fff1f0</text>
+  <rect class="sw" x="40" y="340" width="10" height="10" fill="#000000"/>
+  <text class="tok m" x="56" y="349">--bcsc-ink</text>              <text class="val m" x="230" y="349">#000000</text>
+  <rect class="sw" x="40" y="364" width="10" height="10" fill="#ffffff"/>
+  <text class="tok m" x="56" y="373">--bcsc-paper</text>            <text class="val m" x="230" y="373">#ffffff</text>
+  <rect class="sw" x="40" y="388" width="10" height="10" fill="#737373"/>
+  <text class="tok m" x="56" y="397">--bcsc-muted</text>            <text class="val m" x="230" y="397">#737373</text>
+  <text class="tok m" x="56" y="421">--bcsc-shadow</text>           <text class="val m" x="204" y="421">6px 6px 0 0</text>
+  <text class="tok m" x="56" y="445">--bcsc-shadow-sm</text>        <text class="val m" x="204" y="445">3px 3px 0 0</text>
+  <text class="tok m" x="56" y="469">--bcsc-radius-card</text>      <text class="val m" x="230" y="469">20px</text>
+  <text class="tok m" x="56" y="493">--bcsc-radius-control</text>   <text class="val m" x="230" y="493">10px</text>
+  <text class="tok m" x="56" y="517">--bcsc-font</text>             <text class="val m" x="204" y="517">Geist, ui-sans…</text>
+
+  <line x1="40" y1="532" x2="338" y2="532" stroke="#8a8a94" stroke-width="1" stroke-opacity="0.4"/>
+  <text class="hot" x="40" y="550">only here</text>
+  <text class="tok m" x="112" y="550">--bcsc-primary-ink</text><text class="val m" x="264" y="550">#ffffff</text>
+  <text class="tok m" x="112" y="566">--bcsc-border</text><text class="val m" x="230" y="566">2px solid</text>
+
+  <!-- right column tokens -->
+  <rect class="sw" x="512" y="292" width="10" height="10" fill="#9a4440"/>
+  <text class="tok m" x="528" y="301">--bcsc-primary</text>          <text class="val m" x="702" y="301">#9a4440</text>
+  <rect class="sw" x="512" y="316" width="10" height="10" fill="#fff1f0"/>
+  <text class="tok m" x="528" y="325">--bcsc-tint</text>             <text class="val m" x="702" y="325">#fff1f0</text>
+  <rect class="sw" x="512" y="340" width="10" height="10" fill="#000000"/>
+  <text class="tok m" x="528" y="349">--bcsc-ink</text>              <text class="val m" x="702" y="349">#000</text>
+  <rect class="sw" x="512" y="364" width="10" height="10" fill="#ffffff"/>
+  <text class="tok m" x="528" y="373">--bcsc-paper</text>            <text class="val m" x="702" y="373">#fff</text>
+  <rect class="sw" x="512" y="388" width="10" height="10" fill="#737373"/>
+  <text class="tok m" x="528" y="397">--bcsc-muted</text>            <text class="val m" x="702" y="397">#737373</text>
+  <text class="tok m" x="528" y="421">--bcsc-shadow</text>           <text class="val m" x="676" y="421">6px 6px 0 0</text>
+  <text class="tok m" x="528" y="445">--bcsc-shadow-sm</text>        <text class="val m" x="676" y="445">3px 3px 0 0</text>
+  <text class="tok m" x="528" y="469">--bcsc-radius-card</text>      <text class="val m" x="702" y="469">20px</text>
+  <text class="tok m" x="528" y="493">--bcsc-radius-control</text>   <text class="val m" x="702" y="493">10px</text>
+  <text class="tok m" x="528" y="517">--bcsc-font</text>             <text class="val m" x="676" y="517">Geist, ui-sans…</text>
+
+  <line x1="512" y1="532" x2="810" y2="532" stroke="#8a8a94" stroke-width="1" stroke-opacity="0.4"/>
+  <text class="hot" x="512" y="550">only here</text>
+  <rect class="sw" x="584" y="541" width="10" height="10" fill="#863a37"/>
+  <text class="tok m" x="600" y="550">--bcsc-primary-dark</text><text class="val m" x="752" y="550">#863a37</text>
+  <text class="hs" x="512" y="566">used by the primary button on hover</text>
+
+  <!-- copy arrow -->
+  <path class="flow" d="M358 238 L488 238"/><polygon points="494,238 482,232 482,244" fill="#c05a54"/>
+  <text class="hs" x="425" y="228" text-anchor="middle">kept in step by hand</text>
+
+  <!-- ══ consumption map ══════════════════════════════════ -->
+  <rect class="shadow" x="29" y="611" width="797" height="182" rx="12"/>
+  <rect class="card"   x="24" y="606" width="797" height="182" rx="12"/>
+  <text class="h" x="40" y="630">Which rules read which property</text>
+
+  <text class="hot m" x="40" y="656">--bcsc-primary</text>       <text class="val" x="176" y="656">page title, primary button, links, focus ring</text>
+  <text class="hot m" x="40" y="678">--bcsc-tint</text>          <text class="val" x="176" y="678">page background, danger alert background</text>
+  <text class="hot m" x="40" y="700">--bcsc-ink</text>           <text class="val" x="176" y="700">body text, and every 2px border literal</text>
+  <text class="hot m" x="40" y="722">--bcsc-paper</text>         <text class="val" x="176" y="722">card and form control backgrounds</text>
+  <text class="hot m" x="40" y="744">--bcsc-muted</text>         <text class="val" x="176" y="744">checkbox label, footer band</text>
+  <text class="hot m" x="40" y="766">--bcsc-primary-dark</text>  <text class="val" x="176" y="766">primary button hover only</text>
+
+  <line x1="432" y1="640" x2="432" y2="774" stroke="#8a8a94" stroke-width="1" stroke-opacity="0.3"/>
+
+  <text class="hot m" x="452" y="656">--bcsc-shadow</text>        <text class="val" x="602" y="656">the login card</text>
+  <text class="hot m" x="452" y="678">--bcsc-shadow-sm</text>     <text class="val" x="602" y="678">focus, primary button, alerts</text>
+  <text class="hot m" x="452" y="700">--bcsc-radius-card</text>   <text class="val" x="602" y="700">the login card</text>
+  <text class="hot m" x="452" y="722">--bcsc-radius-control</text><text class="val" x="602" y="722">fields, buttons, alerts, providers</text>
+  <text class="hot m" x="452" y="744">--bcsc-font</text>          <text class="val" x="602" y="744">body, title, fields, buttons</text>
+  <text class="hot m" x="452" y="766">--bcsc-border</text>        <text class="val" x="602" y="766">unused by the Keycloak theme</text>
+
+  <text class="note" x="24" y="820">Editing a colour means editing both files. Only <tspan class="m">brockcsc.css</tspan> changes what renders; <tspan class="m">tokens.css</tspan> keeps the club palette in one readable place.</text>
+</svg>
