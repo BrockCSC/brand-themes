@@ -7,7 +7,6 @@ on:
     branches: [main]
     paths:
       - "keycloak/**"
-      - "roundcube/**"
       - "tokens.css"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
@@ -42,7 +41,7 @@ jobs:
           printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
 
           # The key is pinned to a forced command; this command string is ignored.
-          tar czf - keycloak roundcube tokens.css \
+          tar czf - keycloak tokens.css \
             | ssh -i ~/.ssh/theme_deploy \
                   -o IdentitiesOnly=yes \
                   -o StrictHostKeyChecking=yes \

@@ -5,7 +5,6 @@
 set -eu
 
 KEYCLOAK_THEMES=/opt/wayfarer/keycloak/themes
-ROUNDCUBE_SKINS=/opt/wayfarer/mail/skins
 
 staging=$(mktemp -d /tmp/themes.XXXXXX)
 trap 'rm -rf "$staging"' EXIT
@@ -22,24 +21,17 @@ fi
   echo "payload missing the keycloak theme" >&2
   exit 1
 }
-[ -f "$staging/roundcube/brockcsc/meta.json" ] || {
-  echo "payload missing the roundcube skin" >&2
-  exit 1
-}
 
-install -d "$KEYCLOAK_THEMES" "$ROUNDCUBE_SKINS"
+install -d "$KEYCLOAK_THEMES"
 
-rm -rf "$KEYCLOAK_THEMES/brockcsc.new" "$ROUNDCUBE_SKINS/brockcsc.new"
+rm -rf "$KEYCLOAK_THEMES/brockcsc.new"
 cp -a "$staging/keycloak/brockcsc" "$KEYCLOAK_THEMES/brockcsc.new"
-cp -a "$staging/roundcube/brockcsc" "$ROUNDCUBE_SKINS/brockcsc.new"
 
 # Swap last so a half-copied theme is never live.
-rm -rf "$KEYCLOAK_THEMES/brockcsc" "$ROUNDCUBE_SKINS/brockcsc"
+rm -rf "$KEYCLOAK_THEMES/brockcsc"
 mv "$KEYCLOAK_THEMES/brockcsc.new" "$KEYCLOAK_THEMES/brockcsc"
-mv "$ROUNDCUBE_SKINS/brockcsc.new" "$ROUNDCUBE_SKINS/brockcsc"
 
 # Keycloak caches themes in production mode.
 docker restart keycloak >/dev/null
-docker restart brockcsc-roundcube >/dev/null 2>&1 || true
 
-echo "themes installed"
+echo "theme installed"

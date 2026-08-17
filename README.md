@@ -7,17 +7,16 @@ installs.
 | Theme | Applies to | Installs at |
 | --- | --- | --- |
 | `keycloak/brockcsc` | the `brockcsc` realm login pages on auth.wayfarerbx.com | `/opt/wayfarer/keycloak/themes/brockcsc` |
-| `roundcube/brockcsc` | webmail on mail.brockcsc.ca | `/opt/wayfarer/mail/skins/brockcsc` |
 
 Both are **extensions, not forks**: the Keycloak theme sets
-`parent=keycloak.v2` and the Roundcube skin sets `"extends": "elastic"`, so
+`parent=keycloak.v2`, so
 upstream security updates apply without merge conflicts.
 
 ## Tokens
 
 `tokens.css` is the source of truth, mirroring `app/globals.css` in
 BrockCSC/website. Both themes repeat the same custom properties because
-Keycloak and Roundcube load their stylesheets independently; change all three
+Keycloak loads its stylesheet independently; change both
 together.
 
 | | |
